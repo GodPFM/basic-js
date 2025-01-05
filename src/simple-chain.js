@@ -2,28 +2,43 @@ const { NotImplementedError } = require('../extensions/index.js');
 
 /**
  * Implement chainMaker object according to task description
- * 
+ *
  */
 const chainMaker = {
+  massiveWithData: [],
+  stringToReturn: '',
+
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.massiveWithData.length;
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value) {
+    this.massiveWithData.push(String(value));
+    return this;
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+    if (this.massiveWithData[position - 1] == undefined) {
+      this.massiveWithData = [];
+      this.stringToReturn = '';
+      throw new Error('You can\'t remove incorrect link!');
+    }
+    this.massiveWithData.splice(position - 1, 1);
+    return this;
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.massiveWithData.reverse();
+    return this;
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    for (let i = 0; i < this.massiveWithData.length;i++) {
+      this.stringToReturn += '( ' + this.massiveWithData[i] + ' )';
+      if (this.massiveWithData.length != 1 && i != this.massiveWithData.length - 1) {
+        this.stringToReturn += '~~'
+      }
+    }
+    let ret = this.stringToReturn;
+    this.massiveWithData = [];
+    this.stringToReturn = '';
+    return ret;
   }
 };
 
